@@ -22,3 +22,5 @@ clean:
 test:
 	shellcheck -x -s sh ${NAME}
 	shellcheck -x -s sh ${NAME}.config
+	shellcheck -x -s sh modules/${NAME}.*
+	shellcheck -x -s sh utils/*

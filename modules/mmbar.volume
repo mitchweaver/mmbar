@@ -4,7 +4,7 @@ get_volume() {
     case $OS in
         Linux)
             sink=$(pacmd list-sinks | awk '/index:/{i++} /* index:/{print i; exit}')
-            vol=$(pacmd list-sinks | awk '/^\svolume:/{i++} i=='$sink'{print $5; exit}')
+            vol=$(pacmd list-sinks | awk '/^\svolume:/{i++} i=='"$sink"'{print $5; exit}')
             ;;
         OpenBSD)
             vol=$(sndioctl -n output.level)

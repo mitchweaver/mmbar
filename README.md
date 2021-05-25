@@ -3,7 +3,7 @@
 Mitch's Modular Bar for dwm on Linux/OpenBSD  
 *(and other window managers that read from root window title)*
 
-Written in POSIX sh.
+Written in POSIX sh
 
 ## Dependencies
 
@@ -20,3 +20,9 @@ Written in POSIX sh.
 ## Running
 
 `mmbar -d`
+
+## Testing
+
+Check with shellcheck:
+
+`make test`
