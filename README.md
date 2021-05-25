@@ -9,8 +9,9 @@ Written in POSIX sh
 
 | Module   | Dependencies |
 | -------- | ------------ |
-| crypto   | `jq`         |
 | ssid     | `iwconfig`, `ifconfig`   |
+| crypto   | `jq` |
+| weather  | `curl` |
 
 
 ## Installation
