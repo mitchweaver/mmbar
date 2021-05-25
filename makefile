@@ -6,7 +6,7 @@ all:
 	@>&2 echo "Use 'make install'."
 
 install:
-	install -Dm0755 ${NAME}        ${DESTDIR}${PREFIX}/bin/${NAME}
+	install -Dm0755 ${NAME} ${DESTDIR}${PREFIX}/bin/${NAME}
 	install -Dm0755 ${NAME}.config ${BAR_HOME}/${NAME}.config
 	mkdir -p ${BAR_HOME}/modules ${BAR_HOME}/utils
 	install -m0755 modules/${NAME}.* ${BAR_HOME}/modules/
