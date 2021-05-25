@@ -1,0 +1,35 @@
+#!/bin/sh
+
+get_volume() {
+    case $OS in
+        Linux)
+            sink=$(pacmd list-sinks | awk '/index:/{i++} /* index:/{print i; exit}')
+            vol=$(pacmd list-sinks | awk '/^\svolume:/{i++} i=='$sink'{print $5; exit}')
+            ;;
+        OpenBSD)
+            vol=$(sndioctl -n output.level)
+            vol=${vol%?}
+            vol=${vol#0.}
+            vol=${vol#0}
+            case $vol in
+                1.00)
+                    vol=100
+                    ;;
+                0)
+                    vol=0
+            esac
+    esac
+
+    case ${vol%??} in
+        [5-9]|10)
+            emoji=''
+            ;;
+        [1-4])
+            emoji=''
+            ;;
+        *)
+            emoji=''
+    esac
+
+    printf '%s %s' "$emoji" "$vol"
+}

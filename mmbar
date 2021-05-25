@@ -1,0 +1,72 @@
+#!/bin/sh -e
+#
+# http://github.com/mitchweaver/mmbar
+#
+# ░█▄█░▀█▀░▀█▀░█▀▀░█░█░▀░█▀▀░░░█▄█░█▀█░█▀▄░█░█░█░░░█▀█░█▀▄░░░█▀▄░█▀█░█▀▄
+# ░█░█░░█░░░█░░█░░░█▀█░░░▀▀█░░░█░█░█░█░█░█░█░█░█░░░█▀█░█▀▄░░░█▀▄░█▀█░█▀▄
+# ░▀░▀░▀▀▀░░▀░░▀▀▀░▀░▀░░░▀▀▀░░░▀░▀░▀▀▀░▀▀░░▀▀▀░▀▀▀░▀░▀░▀░▀░░░▀▀░░▀░▀░▀░▀
+#
+# modular bar for dwm on Linux/OpenBSD
+#
+# -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+usage() {
+    >&2 printf 'Usage: %s []\n' "${0##*/}"
+    exit 1
+}
+
+init() {
+    export BAR_HOME="${HOME}/.local/${0##*/}"
+
+    # cache uname as a variable to limit number of external processes
+    case $(uname) in
+        Linux)
+            export OS=Linux
+            ;;
+        OpenBSD)
+            export OS=OpenBSD
+    esac
+}
+
+load_config() {
+    # shellcheck disable=1090
+    . "$BAR_HOME/${0##*/}.config"
+}
+
+load_modules() {
+    for script in "${BAR_HOME}"/modules/* ; do
+        # shellcheck disable=1090
+        . "$script"
+    done
+}
+
+print_info() {
+    info=$(\
+    for module in $ENABLED_MODULES ; do
+        eval "get_${module}"
+        printf '%s' "$SEPARATOR"
+    done\
+    )
+    printf '%s\n' "${info%$SEPARATOR}"
+}
+
+start_daemon() {
+    while sleep 1 ; do
+        xsetroot -name "$(print_info)"
+    done
+}
+
+main() {
+    init
+    load_config
+    load_modules
+    case $1 in
+        -d)
+            start_daemon
+            ;;
+        *)
+            print_info
+    esac
+}
+
+main "$@"
