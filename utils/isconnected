@@ -1,3 +1,2 @@
 #!/bin/sh
-
 exec ping -w 1 -c 1 -s 1 1.9.9.9 >/dev/null 2>&1
