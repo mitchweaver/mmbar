@@ -5,6 +5,10 @@ Mitch's Modular Bar for dwm on Linux/OpenBSD
 
 Written in POSIX sh
 
+*Currently work in progress*
+
+![image](https://0x0.st/-eCL.png)
+
 ## Dependencies
 
 | Module   | Dependencies |
