@@ -7,6 +7,11 @@ get_battery() {
             s=$(apm -a)
             ;;
         Linux)
+            # if this dir is empty, we have neither a battery nor AC adapter
+            # probably using a desktop...
+            if [ ! "$(ls /sys/class/power_supply)" ] ; then
+                return
+            fi
 
             # try to automagically find battery path
             for i in 0 1 2 ; do
@@ -42,7 +47,7 @@ get_battery() {
 
             if [ ! "$ac_path" ] || [ ! "$battery_path" ] ; then
                 >&2 echo 'CANNOT GET BATTERY OR AC! Specify in config manually...'
-                return 1
+                return
             fi
 
             read -r p <"$battery_path"/capacity
@@ -51,7 +56,7 @@ get_battery() {
 
     if [ ! "$p" ] || [ ! "$s" ] ; then
         >&2 echo 'Cannot find percent or AC status for battery?'
-        return 1
+        return
     fi
 
     case $s in
