@@ -11,8 +11,10 @@ get_traffic() {
                 read -r rx <"/sys/class/net/$INTERFACE/statistics/rx_bytes"
                 read -r tx <"/sys/class/net/$INTERFACE/statistics/tx_bytes"
             fi
-            printf ' %s  %s' \
-                "$(printf '%s\n' "${rx:-0}" | "$BAR_HOME"/utils/human)" \
-                "$(printf '%s\n' "${tx:-0}" | "$BAR_HOME"/utils/human)"
+            if [ "$rx" ] && [ "$tx" ] ; then
+                printf ' %s  %s' \
+                    "$(printf '%s\n' "${rx:-0}" | "$BAR_HOME"/utils/human)" \
+                    "$(printf '%s\n' "${tx:-0}" | "$BAR_HOME"/utils/human)"
+            fi
     esac
 }
