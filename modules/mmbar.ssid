@@ -18,7 +18,7 @@ EOF
 
         Linux)
             case $INTERFACE in
-                eth*|enp*)
+                eth?|enp*)
                     ssid=Wired
                     ;;
                 wlan?|wlp*)
@@ -28,7 +28,11 @@ EOF
             esac
 
             case $ssid in
-                *':off/'*|Wired)
+                Wired)
+                    ;;
+                # not connected to any ssid
+                *':off/'*)
+                    ssid='No Network'
                     ;;
                 *)
                     ssid=${ssid%\"*}
