@@ -43,8 +43,10 @@ load_modules() {
 print_info() {
     info=$(\
     for module in $ENABLED_MODULES ; do
-        eval "get_${module}"
-        printf '%s' "$SEPARATOR"
+        output=$(eval "get_${module}")
+        if [ "$output" ] ; then
+            printf '%s%s' "$output" "$SEPARATOR"
+        fi
     done\
     )
     printf '%s\n' "${info%$SEPARATOR}"
