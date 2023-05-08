@@ -3,8 +3,19 @@
 get_volume() {
     case $OS in
         Linux)
-            sink=$(pacmd list-sinks | awk '/index:/{i++} /* index:/{print i; exit}')
-            vol=$(pacmd list-sinks | awk '/^\svolume:/{i++} i=='"$sink"'{print $5; exit}')
+            if command -v pacmd >/dev/null && ! command -v dnf >/dev/null ; then
+                sink=$(pacmd list-sinks | awk '/index:/{i++} /* index:/{print i; exit}')
+                vol=$(pacmd list-sinks | awk '/^\svolume:/{i++} i=='"$sink"'{print $5; exit}')
+                printf '%s' "$vol"
+            elif command -v amixer >/dev/null ; then
+                amixer sget 'Master' | grep '%' | \
+                head -n 1 | \
+                while read -r _ _ _ vol ; do
+                    vol=${vol%%]*}
+                    vol=${vol##*[}
+                    printf '%s' "$vol"
+                done
+            fi
             ;;
         OpenBSD)
             vol=$(sndioctl -n output.level)
