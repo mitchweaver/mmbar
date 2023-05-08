@@ -1,25 +1,23 @@
 #!/bin/sh
 
 get_loadavg() {
-# example output:
-#
-# 03:42:54 up  8:33,  1 user,  load average: 1.09, 1.31, 1.01
-#
-# we are interested in the first number, the 1.09
-# this is the load average over last 60 seconds
-read -r time up since num user load avg ONE_MIN _ _ <<EOF
-    $(uptime)
-done
-EOF
+    # example output:
+    #
+    # 03:42:54 up  8:33,  1 user,  load average: 1.09, 1.31, 1.01
+    #
+    # we are interested in the first number, the 1.09
+    # this is the load average over last 60 seconds
 
-ONE_MIN=${ONE_MIN%,}
+    ONE_MIN=$(uptime)
+    ONE_MIN=${ONE_MIN##*:}
+    ONE_MIN=${ONE_MIN%%,*}
 
-val=$(echo "scale=2; $ONE_MIN / $NPROC * 100" | bc)
-val=${val%??}
-val=${val%.}
+    val=$(echo "scale=2; $ONE_MIN / $NPROC * 100" | bc)
+    val=${val%??}
+    val=${val%.}
 
-# to get CPU usage percent, send to bc
-if [ "$ONE_MIN" ] ; then
-    printf '󰌢 %s%%' "$val"
-fi
+    # to get CPU usage percent, send to bc
+    if [ "$ONE_MIN" ] ; then
+        printf '󰌢 %s%%' "$val"
+    fi
 }
