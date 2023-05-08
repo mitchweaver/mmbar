@@ -53,7 +53,7 @@ print_info() {
 }
 
 start_daemon() {
-    while sleep 1 ; do
+    while sleep "${MMBAR_UPDATE_INTERVAL:-1}" ; do
         xsetroot -name "$(print_info)"
     done
 }
