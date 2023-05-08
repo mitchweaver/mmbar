@@ -8,13 +8,9 @@ get_volume() {
                 vol=$(pacmd list-sinks | awk '/^\svolume:/{i++} i=='"$sink"'{print $5; exit}')
                 printf '%s' "$vol"
             elif command -v amixer >/dev/null ; then
-                amixer sget 'Master' | grep '%' | \
-                head -n 1 | \
-                while read -r _ _ _ vol ; do
-                    vol=${vol%%]*}
-                    vol=${vol##*[}
-                    printf '%s' "$vol"
-                done
+                vol=$(amixer sget 'Master' | grep '%' | head -n 1)
+                vol="${vol%%]*}"
+                vol="${vol##*[}"
             fi
             ;;
         OpenBSD)
