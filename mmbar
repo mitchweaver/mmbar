@@ -49,7 +49,7 @@ print_info() {
         fi
     done\
     )
-    printf '%s\n' "${info%$SEPARATOR}"
+    printf '%s\n' "$MMBAR_HEAD${info%$SEPARATOR}$MMBAR_TAIL"
 }
 
 start_daemon() {
