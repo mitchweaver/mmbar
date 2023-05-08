@@ -50,7 +50,7 @@ get_battery() {
                 return
             fi
 
-            read -r p <"$battery_path"/capacity
+            read -r p <"$battery_path"
             read -r s <"$ac_path"/online
     esac
 
