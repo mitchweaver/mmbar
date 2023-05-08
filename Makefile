@@ -1,6 +1,6 @@
 PREFIX = ${HOME}/.local
 NAME = mmbar
-BAR_HOME = ${DESTDIR}${PREFIX}/${NAME}
+BAR_HOME = ${HOME}/.config/${NAME}
 
 all:
 	@>&2 echo "Use 'make install'."

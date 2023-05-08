@@ -16,7 +16,7 @@ usage() {
 }
 
 init() {
-    export BAR_HOME="${HOME}/.local/${0##*/}"
+    export BAR_HOME="${HOME}/.config/${0##*/}"
 
     # cache uname as a variable to limit number of external processes
     case $(uname) in
