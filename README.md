@@ -15,7 +15,7 @@ Written in POSIX sh
 | -------- | ------------ |
 | ssid     | `iwconfig`, `ifconfig`   |
 | crypto   | `jq` |
-| weather  | `curl` |
+| weather  | [weatherd](https://github.com/mitchweaver/bin/blob/master/bin/weatherd) |
 
 
 ## Installation

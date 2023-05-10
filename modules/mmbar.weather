@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# see: https://github.com/mitchweaver/bin/blob/master/bin/weatherd
+#
+
+get_weather() {
+    : "${WEATHERD_OUTPUT_FILE:=${XDG_CACHE_HOME:-${HOME}/.cache}/weatherd/output}"
+    if [ -f "$WEATHERD_OUTPUT_FILE" ] ; then
+        read -r loc < "$WEATHERD_OUTPUT_FILE"
+        printf '%s\n' "$loc"
+    else
+        >&2 printf '%s\n' "N/A"
+    fi
+}
